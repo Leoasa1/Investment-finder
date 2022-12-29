@@ -64,7 +64,7 @@ export default function Investments() {
 								'crypto',
 								JSON.stringify(response.data[3].data.coins)
 						  )
-						: setShowCateo(false);
+						: setShowCrypto(false);
 				}
 			})
 			.catch(function (error) {
@@ -110,6 +110,7 @@ export default function Investments() {
 					title='Properties'
 					description=''
 					showCard={showProp}
+					link='/statement/properties'
 				/>
 				<Card
 					image='/images/inventory.png'
@@ -117,6 +118,7 @@ export default function Investments() {
 					title='Insdustry Stocks'
 					description=''
 					showCard={showIndus}
+					link='/statement/industry-stocks'
 				/>
 				<Card
 					image='/images/stock.png'
@@ -124,6 +126,7 @@ export default function Investments() {
 					title='Best Performing Stocks'
 					description=''
 					showCard={showCateo}
+					link='/statement/performing-stocks'
 				/>
 				<Card
 					image='/images/bitcoin.png'
@@ -131,6 +134,7 @@ export default function Investments() {
 					title='Crypto'
 					description=''
 					showCard={showCrypto}
+					link='/statement/crypto'
 				/>
 			</div>
 		</div>

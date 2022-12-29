@@ -1,5 +1,6 @@
 import React from 'react';
 import Image from 'next/image';
+import { useRouter } from 'next/router';
 
 export interface props {
 	image: string;
@@ -7,9 +8,23 @@ export interface props {
 	description: string;
 	loaded: boolean;
 	showCard: boolean;
+	link: string;
 }
 
-function Card({ image, title, description, loaded, showCard = true }: props) {
+function Card({
+	image,
+	title,
+	description,
+	loaded,
+	showCard = true,
+	link,
+}: props) {
+	const Router = useRouter();
+
+	const Link = () => {
+		if (loaded === true) Router.push(link);
+	};
+
 	return (
 		<>
 			{showCard === true ? (
@@ -17,6 +32,7 @@ function Card({ image, title, description, loaded, showCard = true }: props) {
 					className={`${
 						loaded === false ? 'animate-pulse' : ''
 					} btn btn-outline btn-options bg-base-100 h-96 w-96 cursor-pointer shadow-xl`}
+					onClick={Link}
 				>
 					<div className={loaded === false ? 'p-0' : 'p-10'}>
 						{loaded === false ? (
