@@ -9,19 +9,30 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "autoprefixer": "^10.4.11",
+    "axios": "^1.2.0",
+    "daisyui": "^2.28.0",
+    "is-valid-zip": "^0.0.5",
     "next": "12.2.5",
     "react": "18.2.0",
     "react-dom": "18.2.0",
+    "react-icons": "^4.4.0",
+    "react-number-format": "^5.0.1",
+    "react-toastify": "^9.0.8",
+    "sass": "^1.55.0",
     "ui": "*"
   },
   "devDependencies": {
     "@babel/core": "^7.0.0",
+    "@types/node": "^17.0.12",
+    "@types/react": "18.0.17",
     "eslint": "7.32.0",
     "eslint-config-custom": "*",
     "next-transpile-modules": "9.0.0",
+    "postcss": "^8.4.16",
+    "tailwind-config": "*",
+    "tailwindcss": "^3.1.8",
     "tsconfig": "*",
-    "@types/node": "^17.0.12",
-    "@types/react": "18.0.17",
-    "typescript": "^4.5.3"
+    "typescript": "^4.8.4"
   }
 }

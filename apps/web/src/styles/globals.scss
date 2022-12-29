@@ -1,0 +1,102 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;300;400;500;600;700;900&family=Playfair+Display:wght@400;600;700&display=swap');
+
+@import './type.scss';
+
+:root {
+  --navbar-header-height: 2.2rem;
+  --navbar-height: 5.2rem;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+}
+
+.playfair {
+  font-family: 'Playfair Display', serif;
+}
+
+.btn {
+  font-family: 'Inter', sans-serif;
+}
+
+.input-wrapper {
+  display: block;
+  font-family: monospace;
+  font-size: 125%;
+  width: 100%;
+  > input,
+  > .placeholder {
+    appearance: none;
+    background-color: transparent;
+    border: none;
+  }
+  > .placeholder {
+    pointer-events: none;
+    @include typed(
+      "100",
+      "100,000",
+      "1,000,000,000",
+      "10",
+      1.5,
+      (
+        caret-width: 2px,
+        caret-space: 2px
+      )
+    );
+  }
+  > input:not(:placeholder-shown),
+  :focus,
+  :active {
+    + .placeholder {
+      display: none;
+    }
+  }
+  > input {
+    text-align: center;
+    border-bottom: black solid 1px;
+    outline-width: 0;
+    outline: none;
+  }
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button { 
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+.input-zip {
+  appearance: none;
+  background-color: transparent;
+  border-bottom: black solid 1px;
+  outline: none;
+  outline-width: 0;
+  text-align: center;
+  position: relative;
+  visibility: hidden;
+}
+
+.show-zip {
+  animation-duration: 1s;
+  transform: translate(0px, 16px);
+  visibility: visible;
+  transition: 1.5s;
+}
+
+.btn:hover {
+  background-color: #3D4451;
+}
+
+.btn:active {
+  background-color: #3D4451;
+}
+
+.btn-options {
+  background-color: #F2F5F9;
+  border: none;
+}
+
