@@ -100,3 +100,13 @@ input::-webkit-inner-spin-button {
   border: none;
 }
 
+.btn-submit {
+  width: 445px;
+}
+
+@media all and (max-width: 768px) {
+  .btn-submit {
+    width: 320px;
+  }
+}
+

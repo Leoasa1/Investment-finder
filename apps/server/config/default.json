@@ -1,0 +1,4 @@
+{
+	"mongoURI": "mongodb+srv://leoasa:Pasadena22@cluster0.vvdvvbl.mongodb.net/?retryWrites=true&w=majority",
+	"jwtSecret": "06c219e5bc8378f3a8a3f83b4b7e4649"
+}

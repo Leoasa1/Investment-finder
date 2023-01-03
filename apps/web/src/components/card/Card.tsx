@@ -31,7 +31,7 @@ function Card({
 				<div
 					className={`${
 						loaded === false ? 'animate-pulse' : ''
-					} btn btn-outline btn-options bg-base-100 h-96 w-96 cursor-pointer shadow-xl`}
+					} btn btn-outline btn-options bg-base-100 grid h-80 w-80 cursor-pointer shadow-xl md:h-96 md:w-96`}
 					onClick={Link}
 				>
 					<div className={loaded === false ? 'p-0' : 'p-10'}>
@@ -41,12 +41,12 @@ function Card({
 							<Image
 								src={image}
 								alt='investment'
-								width={150}
-								height={150}
+								width={140}
+								height={140}
 							/>
 						)}
 					</div>
-					<div className='card-body items-center px-6 py-10 text-center'>
+					<div className='card-body items-center px-6 text-center md:py-10'>
 						{loaded === false ? (
 							<div className='h-8 w-56 rounded-md bg-gray-200' />
 						) : (

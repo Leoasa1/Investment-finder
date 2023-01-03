@@ -10,19 +10,20 @@ export default function Web() {
 	const router = useRouter();
 
 	useEffect(() => {
-		localStorage.setItem('budget', 'null');
-		localStorage.setItem('zip', 'null');
-		localStorage.setItem('properties', '[]');
-		localStorage.setItem('industry-stocks', '[]');
-		localStorage.setItem('categorie-stocks', '[]');
-		localStorage.setItem('crypto', '[]');
+		sessionStorage.setItem('budget', 'null');
+		sessionStorage.setItem('zip', 'null');
+		sessionStorage.setItem('properties', '[]');
+		sessionStorage.setItem('industry-stocks', '[]');
+		sessionStorage.setItem('categorie-stocks', '[]');
+		sessionStorage.setItem('crypto', '[]');
+		sessionStorage.setItem('previous-search', 'false');
 	});
 
 	const onSubmit = (e: any) => {
 		e.preventDefault();
 		if (parseInt(budgetValue) >= 1 && isValidZip(zipValue)) {
-			localStorage.setItem('budget', budgetValue);
-			localStorage.setItem('zip', zipValue);
+			sessionStorage.setItem('budget', budgetValue);
+			sessionStorage.setItem('zip', zipValue);
 			router.push('/statement/invest-options');
 		} else {
 			toast.error('Budget or Zip-Code is Invalid!');
@@ -64,6 +65,13 @@ export default function Web() {
 								thousandSeparator=','
 							/>
 							<span className='placeholder absolute inset-x-0 text-4xl'></span>
+						</div>
+						<div
+							className={`${
+								budgetValue ? 'show-zip' : 'invisible'
+							} inset-x-50 absolute ml-20 mt-2 w-6 text-2xl font-medium`}
+						>
+							Zip
 						</div>
 						<NumericFormat
 							displayType='input'

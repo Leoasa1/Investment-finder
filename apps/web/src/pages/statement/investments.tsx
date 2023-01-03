@@ -8,8 +8,6 @@ import Card from '../../components/card/Card';
 export default function Investments() {
 	const router = useRouter();
 	const [loaded, setLoaded] = useState(false);
-	const [budget, setBudget] = useState('');
-	const [zip, setZip] = useState('');
 
 	const [showProp, setShowProp] = useState(true);
 	const [showIndus, setShowIndus] = useState(true);
@@ -17,53 +15,77 @@ export default function Investments() {
 	const [showCrypto, setShowCrypto] = useState(true);
 
 	const BUDGET =
-		typeof window !== 'undefined' ? localStorage.getItem('budget') : null;
+		typeof window !== 'undefined' ? sessionStorage.getItem('budget') : null;
 	const ZIP =
-		typeof window !== 'undefined' ? localStorage.getItem('zip') : null;
+		typeof window !== 'undefined' ? sessionStorage.getItem('zip') : null;
+	const PREV_SEARCH =
+		typeof window !== 'undefined'
+			? sessionStorage.getItem('previous-search')
+			: null;
+
+	const [budget, setBudget] = useState<string | null>(BUDGET);
+
+	const getPrevResult = () => {
+		setLoaded(true);
+		console.log(sessionStorage.getItem('properties'));
+		{
+			sessionStorage.getItem('properties') !== '[]'
+				? setShowProp(true)
+				: setShowProp(false);
+		}
+	};
 
 	const getResult = async () => {
 		const OPTIONS = {
 			method: 'GET',
 			url: 'http://localhost:5000/search/single-invest',
 			params: {
-				budget: `${BUDGET}`,
+				budget: `${budget}`,
 				zip: `${ZIP}`,
 			},
 		};
+		console.log(budget);
+
 		await AXIOS.request(OPTIONS)
 			.then(function (response) {
 				setLoaded(true);
 				console.log(response.data);
+				sessionStorage.setItem('previous-search', 'true');
+
+				sessionStorage.setItem(
+					'properties',
+					JSON.stringify(response.data[0].properties)
+				);
+				sessionStorage.setItem(
+					'industry-stocks',
+					JSON.stringify(response.data[1])
+				);
+				sessionStorage.setItem(
+					'categorie-stocks',
+					JSON.stringify(response.data[2].gainers)
+				);
+				sessionStorage.setItem(
+					'crypto',
+					JSON.stringify(response.data[3].data.coins)
+				);
 				{
 					response.data[0].properties.length !== 0
-						? localStorage.setItem(
-								'properties',
-								JSON.stringify(response.data[0].properties)
-						  )
+						? setShowProp(true)
 						: setShowProp(false);
 				}
 				{
 					response.data[1].length !== 0
-						? localStorage.setItem(
-								'industry-stocks',
-								JSON.stringify(response.data[1])
-						  )
+						? setShowIndus(true)
 						: setShowIndus(false);
 				}
 				{
 					response.data[2].gainers.length !== 0
-						? localStorage.setItem(
-								'categorie-stocks',
-								JSON.stringify(response.data[2].gainers)
-						  )
+						? setShowCateo(true)
 						: setShowCateo(false);
 				}
 				{
 					response.data[3].data.coins.length !== 0
-						? localStorage.setItem(
-								'crypto',
-								JSON.stringify(response.data[3].data.coins)
-						  )
+						? setShowCrypto(true)
 						: setShowCrypto(false);
 				}
 			})
@@ -73,37 +95,57 @@ export default function Investments() {
 		return;
 	};
 
+	const onSubmit = (e: any) => {
+		e.preventDefault();
+		setLoaded(false);
+		setShowProp(true);
+		setShowIndus(true);
+		setShowCateo(true);
+		setShowCrypto(true);
+		sessionStorage.setItem('budget', budget || '');
+		getResult();
+	};
+
 	useEffect(() => {
 		if (BUDGET === 'null' || ZIP === 'null') {
 			router.push('/');
 		}
-		getResult();
-
-		console.log(showProp);
-		console.log(showIndus);
+		if (PREV_SEARCH === 'true') {
+			getPrevResult();
+		} else {
+			getResult();
+		}
 	}, []);
 
 	return (
-		<div className='container mx-auto text-center'>
-			<div>
-				<h1 className='playfair pb-5 text-5xl font-bold'>Budget</h1>
+		<div className='container mx-auto px-5 text-center'>
+			<div className='mx-auto grid justify-items-center gap-5'>
+				<h1 className='playfair mx-auto text-4xl font-bold md:text-5xl'>
+					Budget
+				</h1>
 				<NumericFormat
 					name='budget'
-					className={`h-16 w-80 px-5 text-4xl md:w-auto ${Style.budgetInput} text-center`}
+					className={`h-16 w-80 px-5 text-3xl md:w-auto md:text-4xl ${Style.budgetInput} text-center`}
 					aria-label='Ask us any amount'
 					displayType='input'
 					valueIsNumericString={true}
 					placeholder=' '
 					maxLength={13}
-					value={BUDGET}
+					value={budget}
 					onValueChange={(e) => {
 						setBudget(e.value);
 					}}
 					allowLeadingZeros
 					thousandSeparator=','
 				/>
+				<button
+					className='btn btn-outline btn-submit'
+					onClick={onSubmit}
+				>
+					Submit
+				</button>
 			</div>
-			<div className='my-20 grid justify-items-center gap-20 px-32 lg:grid-cols-2'>
+			<div className='my-20 grid justify-items-center gap-20 md:px-32 lg:grid-cols-2'>
 				<Card
 					image='/images/house.png'
 					loaded={loaded}
